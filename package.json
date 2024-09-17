@@ -1,0 +1,36 @@
+{
+  "name": "communiti-map",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/pkg.esm.js",
+  "module": "dist/pkg.esm.js",
+  "scripts": {
+    "migrate": "knex migrate:latest --knexfile src/knexfile.js",
+    "dev": "nodemon src/index.js",
+    "start": "node dist/pkg.esm.js",
+    "build": "bunchee --format esm --no-sourcemap --target node --minify ./src/index.js && cp src/knexfile.js dist"
+  },
+  "dependencies": {
+    "@rundik/telegram-text-entities-filler": "^0.2.2",
+    "better-sqlite3": "^11.3.0",
+    "cron": "^1.8.2",
+    "dotenv": "^16.0.0",
+    "fastify": "^3.27.4",
+    "fastify-cors": "^6.0.3",
+    "fastify-static": "^4.6.1",
+    "fuse.js": "^6.5.3",
+    "knex": "^3.1.0",
+    "markdown-it": "^12.3.2",
+    "middie": "^6.0.0",
+    "moize": "^6.1.0",
+    "sanitize-html": "^2.7.0",
+    "slugify": "^1.6.5",
+    "superagent": "^6.1.0",
+    "telegraf": "^4.7.0",
+    "under-pressure": "^5.8.0"
+  },
+  "devDependencies": {
+    "bunchee": "^1.8.2",
+    "nodemon": "^3.1.5"
+  }
+}

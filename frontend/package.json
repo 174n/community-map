@@ -1,0 +1,29 @@
+{
+  "name": "community-map-frontend",
+  "version": "1.0.0",
+  "private": "true",
+  "devDependencies": {
+    "@parcel/packager-raw-url": "^2.4.0",
+    "@parcel/transformer-sass": "^2.4.0",
+    "@parcel/transformer-webmanifest": "^2.4.0",
+    "eslint": "^8.12.0",
+    "parcel": "^2.4.0",
+    "parcel-resolver-ignore": "^2.0.0",
+    "sass": "^1.78.0"
+  },
+  "scripts": {
+    "dev": "parcel serve index.html --port 3000 --open",
+    "build": "parcel build index.html --no-source-maps --dist-dir ../data/public",
+    "lint": "eslint ./**/*.js",
+    "lintfix": "eslint ./**/*.js --fix"
+  },
+  "dependencies": {
+    "@pwabuilder/pwaupdate": "^0.2.0",
+    "fuse.js": "^6.4.3",
+    "leaflet": "^1.7.1",
+    "leaflet-boundary-canvas": "^1.0.0",
+    "leaflet.markercluster": "^1.4.1",
+    "normalize": "^0.3.1",
+    "slugify": "^1.4.6"
+  }
+}

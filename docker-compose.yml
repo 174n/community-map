@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  alpi:
+    image: community-map
+    volumes:
+    - ./data-temp:/usr/src/app/data
+    ports:
+      - 8080:8080
+    env_file:
+      - .env

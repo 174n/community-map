@@ -1,0 +1,5 @@
+frontend
+node_modules
+.env
+*.sqlite3
+*/*.sqlite3

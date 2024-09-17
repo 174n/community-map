@@ -1,0 +1,24 @@
+{
+  "chats": {
+    "CountryName": {
+      "chatURLs": [
+        {
+          "url": "",
+          "prefix": ""
+        }
+      ],
+      "land": "CountryName"
+    }
+  },
+  "variables": {
+    "mainChatURL": "",
+    "mainChatTitle": "",
+    "siteTitle": "",
+    "googleAnalyticsHTML": "<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-...\"></script>",
+    "googleAnalyticsId": "UA-...",
+    "description": "",
+    "siteURL": ""
+  },
+  "templateRefreshMinutes": 5,
+  "avatarsRefreshCron": "0 7 * * *"
+}

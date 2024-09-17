@@ -1,0 +1,335 @@
+@import "../node_modules/leaflet/dist/leaflet.css";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Montserrat', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+.leaflet-control-zoom, .leaflet-bar {
+  border: 0 !important;
+  & > a {
+    background-color: rgba(#fff, 0.6);
+    backdrop-filter: blur(3px);
+  border: 0 !important;
+    &.leaflet-disabled {
+      background-color: rgba(#ddd, 0.6);
+      color: #888;
+      border: 0 !important;
+    }
+  }
+}
+
+.links {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 9999;
+  display: flex;
+
+  .chatlink {
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    font: 12px 'Montserrat', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    background-color: rgba(#fff, 0.5);
+    backdrop-filter: blur(3px);
+    border-radius: 10px;
+    transition: all 300ms ease-in-out;
+    cursor: pointer;
+
+    margin-right: 5px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    .image {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+
+      img {
+        transition: all 1000ms ease-in-out;
+        width: 20px;
+      }
+    }
+
+    .text {
+      transition: all 300ms ease-in-out;
+      font-size: 1.2rem;
+      // font-weight: bolder;
+    }
+
+    &:hover {
+      background-color: rgba(#fff, 0.7);
+
+      .text {
+        letter-spacing: 1px;
+      }
+
+      .image img {
+        transform: rotate(360deg);
+      }
+    }
+
+    &,
+    &:active,
+    &:visited,
+    &:link {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+}
+
+
+#map {
+  width: 100%;
+  height: 100vh;
+  background: #86ccf9;
+  // background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+}
+
+$marker-main: rgba(#26a9dd, 0.8);
+
+.leaflet-cluster-anim .leaflet-marker-icon,
+.leaflet-cluster-anim .leaflet-marker-shadow {
+  transition: transform 0.3s ease-out, opacity 0.3s ease-in;
+}
+
+.leaflet-cluster-spider-leg {
+  transition: stroke-dashoffset 0.3s ease-out, stroke-opacity 0.3s ease-in;
+}
+
+.marker-cluster-small {
+  background-color: $marker-main;
+
+  div {
+    background-color: lighten($marker-main, 10);
+  }
+}
+
+.marker-cluster-medium {
+  background-color: darken($marker-main, 10);
+
+  div {
+    background-color: lighten($marker-main, 15);
+  }
+}
+
+.marker-cluster-large {
+  background-color: darken($marker-main, 20);
+
+  div {
+    background-color: lighten($marker-main, 20);
+  }
+}
+
+.marker-cluster {
+  background-clip: padding-box;
+  border-radius: 20px;
+
+  div {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    margin-top: 5px;
+
+    text-align: center;
+    border-radius: 15px;
+    font: 12px 'Montserrat', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    color: #fff;
+  }
+
+  span {
+    line-height: 30px;
+  }
+}
+
+.search-wrapper {
+  position: absolute;
+  z-index: 99999;
+  font-family: 'Montserrat', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: rgba(#fff, .7);
+  backdrop-filter: blur(3px);
+  transition: all 300ms ease-in-out;
+  visibility: visible;
+
+  &.hide {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  $search-primary: rgba(#dfdfdf, 0.5);
+  $search-secondary: #222;
+
+  .search {
+    margin-top: 30px;
+    width: 400px;
+    max-width: 96%;
+    background-color: $search-primary;
+    color: $search-secondary;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+
+    .close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 300ms ease-in-out;
+
+      svg {
+        transition: all 300ms ease-in-out;
+        width: 15px;
+        fill: $search-secondary;
+      }
+      &:hover {
+        background-color: lighten($search-primary, 10);
+        svg {
+          fill: lighten($search-secondary, 20);
+        }
+      }
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 10px;
+      padding-right: 43px;
+      border: 0;
+      font-size: 1.3rem;
+      transition: all 300ms ease-in-out;
+      background-color: lighten($search-primary, 5);
+      color: $search-secondary;
+      font-family: 'Montserrat', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+
+      &:hover {
+        background-color: lighten($search-primary, 10);
+      }
+
+      &:active,
+      &:focus {
+        border: 0;
+        outline: 0;
+        background-color: lighten($search-primary, 13);
+      }
+    }
+
+    .results {
+      height: 500px;
+      max-height: 100%;
+      overflow-y: auto;
+      scrollbar-width: thin;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: lighten($search-primary, 10);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $search-primary;
+      }
+    }
+
+    .result {
+      transition: all 300ms ease-in-out;
+      background-color: lighten($search-primary, 7);
+      cursor: pointer;
+      padding: 10px;
+
+      &:hover {
+        background-color: lighten($search-primary, 9);
+      }
+
+      &:nth-child(even) {
+        background-color: lighten($search-primary, 4);
+
+        &:hover {
+          background-color: lighten($search-primary, 5);
+        }
+      }
+
+      .title {
+        font-size: 1.1rem;
+        color: darken($search-secondary, 7);
+      }
+
+      .subtitle {
+        font-size: 0.9rem;
+        color: darken($search-secondary, 30);
+      }
+    }
+  }
+}
+
+.no-nickname {
+  margin-top: 5px;
+  font-size: .7rem;
+  display: block;
+  font-weight: lighter;
+  color: #999;
+}
+
+$avatar-width: 50px;
+
+// .leaflet-popup-content-wrapper {
+//   background-color: rgba(#fff, 0.8);
+//   backdrop-filter: blur(3px);
+// }
+
+.leaflet-popup-content {
+  max-width: 220px;
+  .subtitle {
+    display: flex;
+    .avatar {
+      overflow: hidden;
+      border-radius: 50%;
+      min-width: $avatar-width;
+      max-width: $avatar-width;
+      min-height: $avatar-width;
+      max-height: $avatar-width;
+      background-color: #333;
+      img {
+        width: $avatar-width;
+      }
+    }
+    .text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: 10px;
+    }
+  }
+  .description {
+    background-color: #efefef;
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 5px;
+    margin-top: 10px;
+    p {
+      margin: 0;
+    }
+    img {
+      max-width: 100%;
+      margin-top: 3px;
+    }
+  }
+}
